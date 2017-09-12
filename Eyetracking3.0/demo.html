@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+    <HEAD>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+        <TITLE>Simple Demonstration of how WebGazer.js works</TITLE>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </HEAD>
+    <BODY LANG="en-US" LINK="#0000ff" DIR="LTR">
+
+    <section class="motherContainer">
+    <section class="containerLeft">
+      <div id="div1"><p>Hela terminal 2 på Köpenhamns flygplats var avspärrad under en dryg timme på förmiddagen medan ett misstänkt föremål undersöktes med bombrobot. Vid 09.35-tiden återupptogs driften av terminalen. Det kommer dock att bli flygförseningar.</p></div>
+        <div id="div2"><p>Det var Arne Ljungqvists sista stora uppdrag efter 40 år som dopningsjägare. Aldrig har han blivit så lurad och bedragen. Frågan han fortfarande ställer sig är hur inblandad mannen han skakade hand med inför mästerskapet var.</p></div>
+          <div id="div3"><p>
+Med röstsiffrorna 15–0 och utan att någon av säkerhetsrådets permanenta medlemmar röstade emot beslutade FN strax efter midnatt natten mot tisdagen för nya sanktioner mot Nordkorea.</p></div>
+        </section>
+
+        <section class="containerRight">
+            <div id="div4"><p>
+Hillary Clinton säger nu att hon är övertygad om att Donald Trumps medarbetare hjälpte Ryssland att manipulera det amerikanska valet.”Det förekom med säkerhet kommunikation och det fanns med säkerhet en överenskommelse” säger hon till USA Today. I en ny memoarbok jämför hon Trumps ”krig mot sanningen” med Orwells ”1984”.</p></div>
+              <div id="div5"><p>Hillary Clinton säger nu att hon är övertygad om att Donald Trumps medarbetare hjälpte Ryssland att manipulera det amerikanska valet.”Det förekom med säkerhet kommunikation och det fanns med säkerhet en överenskommelse” säger hon till USA Today. I en ny memoarbok jämför hon Trumps ”krig mot sanningen” med Orwells ”1984”.</p></div>
+                <div id="div6"><p>Oslo. Erna Solberg och hennes regering såg uträknad ut i början av året. Sent på måndagskvällen utropades hon som Stortingvalets segrare.
+
+– Detta är en arbetsseger och ett lagarbete, sade hon efter att ha fått fortsatt förtroende som Norges statsminister.</p></div>
+
+      </section>
+    </section>
+
+        <script src="build/webgazer.js"></script>
+        <script src="src/webgazer.js"></script>
+
+        <script>
+window.onload = function() {
+    webgazer.setRegression('ridge') /* currently must set regression and tracker */
+        .setTracker('clmtrackr')
+        .setGazeListener(function(data, clock) {
+         //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+         //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+        })
+        .begin()
+        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+
+    var width = 320;
+    var height = 240;
+    var topDist = '0px';
+    var leftDist = '0px';
+
+  /*  var setup = function() {
+        var video = document.getElementById('webgazerVideoFeed');
+        video.style.display = 'block';
+        video.style.position = 'absolute';
+        video.style.top = topDist;
+        video.style.left = leftDist;
+        video.width = width;
+        video.height = height;
+        video.style.margin = '0px';
+
+        webgazer.params.imgWidth = width;
+        webgazer.params.imgHeight = height;
+
+        var overlay = document.createElement('canvas');
+        overlay.id = 'overlay';
+        overlay.style.position = 'absolute';
+        overlay.width = width;
+        overlay.height = height;
+        overlay.style.top = topDist;
+        overlay.style.left = leftDist;
+        overlay.style.margin = '0px'; */
+
+        document.body.appendChild(overlay);
+
+        var cl = webgazer.getTracker().clm;
+
+        function drawLoop() {
+            requestAnimFrame(drawLoop);
+            overlay.getContext('2d').clearRect(0,0,width,height);
+            if (cl.getCurrentPosition()) {
+                cl.draw(overlay);
+            }
+
+        drawLoop();
+    };
+
+    function checkIfReady() {
+        if (webgazer.isReady()) {
+            setup();
+        } else {
+            setTimeout(checkIfReady, 100);
+        }
+    }
+    setTimeout(checkIfReady,100);
+};
+
+window.onbeforeunload = function() {
+    //webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
+    window.localStorage.clear(); //Comment out if you want to save data across different sessions
+}
+        </script>
+            <script src="src/script.js"></script>
+
+    </BODY>
+</HTML>
